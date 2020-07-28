@@ -18,7 +18,7 @@ do
 	do
             if [ "$(basename $folder)" != "$pol" ]; then 
                 fil=$(basename "$file")
-	        mkdir -p $pol
+	        mkdir -m 755 -p $pol
 	        cp -n $folder/$fil ./$pol/$fil 2>>/dev/null
 	    fi
         done

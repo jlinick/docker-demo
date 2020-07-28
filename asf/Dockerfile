@@ -15,4 +15,4 @@ RUN git clone https://github.com/jlinick/docker-demo.git /docker-demo
 RUN echo 'alias location-of=/docker-demo/find_name.sh' >> ~/.bashrc && \
     echo 'alias query-asf=/docker-demo/query_asf.sh' >> ~/.bashrc && \
     echo 'alias pull-asf=/docker-demo/pull_asf.sh' >> ~/.bashrc && \
-    echo 'alias compile-files=/docker-demo/compile.sh' >> ~/.bashrc
+    echo 'alias compile-files=/docker-demo/compile_files.sh' >> ~/.bashrc
