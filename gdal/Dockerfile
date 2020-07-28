@@ -11,3 +11,4 @@ RUN apt-get update && \
 # clone current repo
 RUN git clone https://github.com/jlinick/docker-demo.git /docker-demo
 
+RUN echo 'alias generate-browse=/docker-demo/generate_browse.sh' >> ~/.bashrc
