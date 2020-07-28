@@ -15,7 +15,7 @@ for folder in ${allowed_polarizations[*]}; do
             # project to Geotiff, generate browse, and then kml
             gdalwarp -t_srs EPSG:4326 -co COMPRESS=JPEG -co PHOTOMETRIC=MINISBLACK -ot Byte "$folder/$filename" "$projected_tiff"
             gdal_translate -ot Byte "$projected_tiff" "$folder/$filebase.jpg"
-            /usr/bin/gdal2tiles.py -k --srcnodata=0 --processes 16 -z 2-10 "$projected_tiff" "$folder/$filebase"
+            /usr/bin/gdal2tiles.py -k --srcnodata=0 --processes 16 -z 3-10 "$projected_tiff" "$folder/$filebase"
 	    rm -f "$projected_tiff"
         done
     fi

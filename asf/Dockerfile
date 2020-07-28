@@ -16,5 +16,3 @@ RUN echo 'alias location-of=/docker-demo/location-of.sh' >> ~/.bashrc && \
     echo 'alias query-asf=/docker-demo/query-asf.sh' >> ~/.bashrc && \
     echo 'alias pull-asf=/docker-demo/pull-asf.sh' >> ~/.bashrc && \
     echo 'alias compile-files=/docker-demo/compile-files.sh' >> ~/.bashrc
-
-SHELL ["/bin/bash", "-c"]
