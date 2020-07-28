@@ -9,5 +9,5 @@ RUN apt-get update && \
     apt-get install -y zip unzip git vim
 
 # clone current repo
-RUN git clone https://github.com/jlinick/docker-demo.git
+RUN git clone https://github.com/jlinick/docker-demo.git /docker-demo
 

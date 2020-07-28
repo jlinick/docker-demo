@@ -2,6 +2,9 @@
 
 allowed_polarizations=("hh" "hv" "vv" "vh")
 
+#unzip the folders
+unzip "*.zip" && rm -f *.zip
+
 tiff_folders=$(find . -name '*.tiff' -printf '%h\n' -path './S1*' |sort -u)
 
 # find all folders containing tiff files

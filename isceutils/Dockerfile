@@ -18,9 +18,9 @@ RUN apt-get install -y software-properties-common && \
     python3 get-pip.py
 
 # clone current repo
-RUN git clone https://github.com/jlinick/docker-demo.git
+RUN git clone https://github.com/jlinick/docker-demo.git /docker-demo
 
 #clone and build iceutils repo and requirements
-RUN git clone https://github.com/bryanvriel/iceutils.git
+RUN git clone https://github.com/bryanvriel/iceutils.git /iceutils
 RUN pip install numpy scipy matplotlib h5py pyproj scikit-learn scikit-image tqdm pint pymp-pypi pint cvxopt
-RUN python /home/iceutils/setup.py install
+RUN python /iceutils/setup.py install
