@@ -4,7 +4,12 @@
  ### Quick demo
  
  1. Clone the repo & fill auth.key.example with keys for Earthdata login Google Maps API.
- 
+ ```shell
+$ git clone https://github.com/jlinick/docker-demo
+$ cd docker-demo
+$ mv auth.key.example auth.key
+$ nano auth.key
+```
  2. build your containers
  ```shell
  $ docker build -t asf:demo asf && docker build -t gdal:demo gdal
