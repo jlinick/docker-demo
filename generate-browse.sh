@@ -6,7 +6,7 @@ allowed_polarizations=("hh" "hv" "vv" "vh")
 for folder in ${allowed_polarizations[*]}; do
     if [[ -d "${folder}" ]]
     then
-        matching_files=$(find $folder -name "*$pol*.tiff" -printf '%p\n' | sort -u)
+        matching_files=$(find $folder -name "*${folder}*.tiff" -printf '%p\n' | sort -u)
         for file in $matching_files
         do
             filename=$(basename "$file")
@@ -21,6 +21,13 @@ for folder in ${allowed_polarizations[*]}; do
 	    cd $folder/$filebase && zip -r "../$filebase.kmz" * && cd ../..
 	    rm -rf $folder/$filebase && chmod -R 755 $folder
         done
+        # if there are jpeg files
+	jpeg_count=$(find $folder -name "*.jpeg" -printf '%p\n' | sort -u | wc -l)
+	if [ "${jpeg_count}" -gt "1" ] ; then
+            # combine all of the browse into a mpeg
+	    mpeg_path="${folder}/animation.mpeg"
+	    ffmpeg -r 15 -i *.jpg -vf scale=3200:-2 "${mpeg_path}"
+	fi
     fi
 done
 
