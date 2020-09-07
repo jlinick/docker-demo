@@ -23,6 +23,6 @@ do
 	    fi
         done
     done
-    rm -rf $folder
+    rm -rf "${folder}"
 done
 
