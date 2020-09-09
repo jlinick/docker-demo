@@ -58,7 +58,7 @@ for folder in ${allowed_polarizations[*]}; do
                 gdal_translate -outsize 4096 0 -of PNG -r nearest "${warp}" "${mpg}" # THIS IS EXTREMELY SLOW. NEED TO MAKE FASTER
 		iterator=$((iterator+1))
             done
-            ffmpeg -r 10 -i "${folder}/%03d.mpg.png" "${folder}/animation.gif"
+            ffmpeg -r 15 -i "${folder}/%03d.mpg.png" "${folder}/animation.avi"
             rm "${folder}"/*.vrt
 	    rm "${folder}"/*.xml
 	    rm "${folder}"/*."${small_ext}"
