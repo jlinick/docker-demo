@@ -21,7 +21,7 @@ do
         -co COMPRESS=ZSTD \
         -co PREDICTOR=2 \
 	-co NUM_THREADS=ALL_CPUS \
-	${tiff_path} ${compressed_tiff_path}
+	${tiff_path} ${compressed_tiff_path} 2>/dev/null
 
     if [ ${delete} ]; then
         rm ${tiff_path}

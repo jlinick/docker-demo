@@ -10,7 +10,7 @@ do
     # unzip the folder
     echo "extracting ${zip_file}..."
     #unzip -d ${current_workdir} ${zip_file} > /dev/null 2>&1
-    unzip -d ${current_workdir} ${zip_file}
+    unzip -d ${current_workdir} ${zip_file} 2> /dev/null
     zip_filename=$(basename ${zip_file})
     zip_folder="${zip_filename/.zip/.SAFE}"
     # find all the tiff files in the extracted folder
@@ -28,7 +28,7 @@ do
 		if [ "$(basename $folder)" != "$pol" ]; then 
                     fil=$(basename "$file")
                     mkdir -m 755 -p $pol
-		    cp -n $folder/$fil ./$pol/$fil 2>>/dev/null
+		    cp -n $folder/$fil ./$pol/$fil 2> /dev/null
 	        fi
             done
         done

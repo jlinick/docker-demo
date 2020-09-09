@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#set -x
-#set -e
+set -x
+set -e
 
 # Uses GDAL to generate brrowse imagery for tiff images in the workdir under vv,vh,hv, or hh subdirectories
 projections=("3995", "3031") # first is arctic, second is antarctic
@@ -31,7 +31,7 @@ gdal_time() {
 
 for folder in ${allowed_polarizations[*]}; do
     if [[ -d "${folder}" ]] ; then
-        matching_files=$(find $folder -name "*${folder}*.merged.tiff" -printf '%p\n' | sort -u)
+        matching_files=$(find $folder -name "*.merged.tiff" -printf '%p\n' | sort -u)
         for file in $matching_files
         do
 	    # filenames & paths

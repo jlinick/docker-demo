@@ -29,17 +29,18 @@ def main(folder, interval, regex):
     # determine which subdirectory each granule belongs in
     gran_list = group_granules(gran_list, interval)
     # move the granules into their proper subdirectory
-    move_files(gran_list)
+    move_files(gran_list, folder)
     #print_subdir_count(gran_list)
 
-def move_files(gran_list):
+def move_files(gran_list, folder):
     '''moves the files into their given subdir'''
     for gran in gran_list:
         filename = os.path.basename(gran.path)
-        to = os.path.join(gran.subdir, filename)
-        if not os.path.exists(gran.subdir):
-            os.makedirs(gran.subdir)
-        print('moving {} to {}/'.format(filename, gran.subdir))
+        to_folder = os.path.join(folder, gran.subdir)
+        to = os.path.join(to_folder, filename)
+        if not os.path.exists(to_folder):
+            os.makedirs(to_folder)
+        print('moving {} to {}/'.format(filename, to_folder))
         shutil.move(gran.path, to)
 
 def print_subdir_count(gran_list):

@@ -14,7 +14,10 @@ else
     input="${1}"
 fi
 # fix url encoding for the comma
-location=$(echo "$input" | sed 's/[,]\+/+/g')
+location=${input}
+
+echo "location: ${location}"
+
 
 # set maxResults
 results="${2}"
@@ -23,7 +26,7 @@ then
     results="1"
 fi
 
-query="https://api.daac.asf.alaska.edu/services/search/param?platform=S1&processingLevel=GRD_MS,GRD_MD&maxResults="${results}"&polygon="${location}"%29&output=metalink"
+query="https://api.daac.asf.alaska.edu/services/search/param?platform=S1&processingLevel=GRD_MS,GRD_MD&maxResults="${results}"&polygon="${location}"&output=metalink"
 
 aria2c --http-auth-challenge=true --http-user="$EARTHDATA_USER" --http-passwd="$EARTHDATA_PASSWORD" "$query"
 
