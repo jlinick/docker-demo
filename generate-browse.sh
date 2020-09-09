@@ -37,14 +37,14 @@ for folder in ${allowed_polarizations[*]}; do
 	    # filenames & paths
             filename="$(basename "${file}")"                   # full filename without the path
             filebase="$(echo ${filename} | sed 's/.merged.tiff//g')"  # filename without extension
-            datetime=$(gdal_time ${file})
+            datetime=${filebase}
 	    proj_ext="projected.vrt"                           # extension for the projected file (file type needs to match GDAL -of)
 	    projected="${folder}/${datetime}.${proj_ext}"      # projected file path
             mpeg_ext="mpeg.png"                                # extension for smaller vrt used for animation
 	    #counter=$(printf %03d $iterator)
 	    #mpeg="${folder}/${counter}.${mpeg_ext}"           # file path to mpeg vrt
-            small_ext="small.vrt"                             # extension for smaller geotiff
-	    small_tif="${folder}/${datetime}.${small_ext}"       # smaller version of image
+            small_ext="small.vrt"                              # extension for smaller geotiff
+	    small_tif="${folder}/${datetime}.${small_ext}"     # smaller version of image
 	    browse_file_type="png"                             # file type of browse image
 	    browse="${folder}/${filebase}.${browse_file_type}" # browse file path
             kml_folder="${folder}/${filebase}"                 # kml folder path
@@ -56,7 +56,7 @@ for folder in ${allowed_polarizations[*]}; do
             gdal_translate -outsize 4096 0 -ot Byte -of VRT "${projected}" "${small_tif}"
 
             # take the projection and save it as a browse png
-	    gdal_translate -outsize 10% 10% -ot Byte "${projected}" "${browse}"
+	    #gdal_translate -outsize 10% 10% -ot Byte "${projected}" "${browse}"
 
             # generate a tiled kmz. first generate a kml, then zip it into a kmz and remove the kml folder
 	    #/usr/bin/gdal2tiles.py -k --srcnodata=0 --processes "${num_procs}" -z 3-10 "${projected}" "${kml_folder}"
