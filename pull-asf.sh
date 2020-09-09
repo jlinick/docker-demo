@@ -23,7 +23,7 @@ then
     results="1"
 fi
 
-query="https://api.daac.asf.alaska.edu/services/search/param?platform=S1&processingLevel=GRD_HS,GRD_HD&maxResults="${results}"&intersectsWith=point%28"${location}"%29&output=metalink"
+query="https://api.daac.asf.alaska.edu/services/search/param?platform=S1&processingLevel=GRD_MS,GRD_MD&maxResults="${results}"&intersectsWith=point%28"${location}"%29&output=metalink"
 
 aria2c --http-auth-challenge=true --http-user="$EARTHDATA_USER" --http-passwd="$EARTHDATA_PASSWORD" "$query"
 
