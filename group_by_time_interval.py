@@ -39,8 +39,8 @@ def move_files(gran_list):
         to = os.path.join(gran.subdir, filename)
         if not os.path.exists(gran.subdir):
             os.makedirs(gran.subdir)
-        print('copying {} to {}/'.format(filename, gran.subdir))
-        shutil.copy2(gran.path, to)
+        print('moving {} to {}/'.format(filename, gran.subdir))
+        shutil.move(gran.path, to)
 
 def print_subdir_count(gran_list):
     '''simple print to see how many files each subdir contains'''

@@ -28,14 +28,15 @@ gdal_time() {
         #tr -d "[(,])-");
     echo -n "$DATETIME"
 }
+
 for folder in ${allowed_polarizations[*]}; do
     if [[ -d "${folder}" ]] ; then
-        matching_files=$(find $folder -name "*${folder}*.tiff" -printf '%p\n' | sort -u)
+        matching_files=$(find $folder -name "*${folder}*.merged.tiff" -printf '%p\n' | sort -u)
         for file in $matching_files
         do
 	    # filenames & paths
             filename="$(basename "${file}")"                   # full filename without the path
-            filebase="$(echo ${filename} | sed 's/.tiff//g')"  # filename without extension
+            filebase="$(echo ${filename} | sed 's/.merged.tiff//g')"  # filename without extension
             datetime=$(gdal_time ${file})
 	    proj_ext="projected.vrt"                           # extension for the projected file (file type needs to match GDAL -of)
 	    projected="${folder}/${datetime}.${proj_ext}"      # projected file path
