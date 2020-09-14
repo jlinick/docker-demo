@@ -29,7 +29,7 @@ for subdir in $(find ${DIR} -maxdepth 1 -name '[0-9]*' -type d); do
             # merge multiple files into mosaic
             gdal_merge.py -ot Byte -of GTiff -n 0 -o ${merged_file} ${DIR}/${subdir}/*.translate.tiff
             # set band 2 as alpha
-            gdal_translate ${DIR}/${subdir}.merged.tiff ${final_tiff} -b 1 -mask 2 -co COMPRESS=LZW --config GDAL_TIFF_INTERNAL_MASK YES
+            gdal_translate ${DIR}/${subdir}.merged.tiff ${final_file} -b 1 -mask 2 -co COMPRESS=LZW --config GDAL_TIFF_INTERNAL_MASK YES
             # clean up 
             #rm -rf ${DIR}/${subdir}
             rm ${DIR}/${subdir}.merged.tiff
