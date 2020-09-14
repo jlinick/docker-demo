@@ -14,20 +14,20 @@ allowed_polarizations=("hh" "hv" "vv" "vh")
 WORKDIR=$(pwd)
 
 # pull the granules
-${DIR}/pull-asf-polygon.sh "${polygon}" "${maxcount}"
+#${DIR}/pull-asf-polygon.sh "${polygon}" "${maxcount}"
 
 # unzip and compile files into proper subdirectories
-${DIR}/compile-files.sh
+#${DIR}/compile-files.sh
 
 # for each polarization
 for poldir in "${allowed_polarizations[@]}"
 do
     if [[ -d ${poldir} ]]; then
         # compress the granules and remove the uncompressed files
-        ${DIR}/compress-files.sh "${poldir}" 1
+        #${DIR}/compress-files.sh "${poldir}" 1
 
         # move the files into proper subdirectories by date
-        ${DIR}/group-by-time-interval.py --folder "${poldir}" --interval 4 --regex "*.compressed.tiff"
+        #${DIR}/group-by-time-interval.py --folder "${poldir}" --interval 4 --regex "*.compressed.tiff"
 
         # merge each file in the subdirectories
 	${DIR}/merge-date.sh ${poldir}
