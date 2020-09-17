@@ -30,7 +30,7 @@ do
         #${DIR}/group-by-time-interval.py --folder "${poldir}" --interval 4 --regex "*.compressed.tiff"
 
         # merge each file in the subdirectories
-	${DIR}/merge-date.sh ${poldir}
+	#${DIR}/merge-date.sh ${poldir}
 
         # generate the animation
         ${DIR}/generate-animation.sh ${kml_path}

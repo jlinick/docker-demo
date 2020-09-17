@@ -33,7 +33,7 @@ gdal_time() {
 for folder in ${allowed_polarizations[*]}; do
     if [[ -d "${folder}" ]] ; then
         # if there are multiple browse files, we will generate an animated file
-	browse_count=$(find $folder -maxdepth 1 -name "*.merged.tiff" -printf '%p\n' | sort -u | wc -l)
+	browse_count=$(find $folder -maxdepth 1 -name "*.merged.masked.tiff" -printf '%p\n' | sort -u | wc -l)
 	if [ "${browse_count}" -gt "1" ] ; then
 
 	    echo "generating animation using ${browse_count} frames..."
@@ -46,40 +46,47 @@ for folder in ${allowed_polarizations[*]}; do
 
             # cut all images to the shapefile
             iterator=1
-	    matching_files=$(find $folder -name "*.merged.tiff" -printf '%p\n' | sort -u)
+	    matching_files=$(find $folder -name "*.merged.masked.tiff" -printf '%p\n' | sort -u)
 	    for file in $matching_files
             do
 		filename="$(basename "${file}")"                              # full filename without the path
-	        filebase="$(echo ${filename} | sed 's/.'"merged.tiff"'//g')"  # filename without extension
+	        filebase="$(echo ${filename} | sed 's/.'"merged.masked.tiff"'//g')"  # filename without extension
 		counter=$(printf %03d $iterator)
 		warp="${folder}/${filebase}.${counter}.cropped.vrt"
 		mpg="${folder}/${counter}.mpg.png"
+		date="${filebase:0:4}-${filebase:4:2}-${filebase:6:2}"
 
                 # crop to the shapefile extent
 
 		#gdalwarp -overwrite -cutline ${shapefile_path} -crop_to_cutline -srcalpha -dstalpha "${file}" "${warp}"
 		gdalwarp -overwrite -cutline ${shapefile_path} -crop_to_cutline -srcalpha -dstalpha "${file}" "${warp}"
-		# export as png
-
+		
+                # export as png
                 #gdal_translate -outsize 4096 0 -of PNG -r nearest "${warp}" "${mpg}" # THIS IS EXTREMELY SLOW. NEED TO MAKE FASTER
                 gdal_translate -of PNG -r nearest -outsize 7424 6521 "${warp}" "${mpg}" # THIS IS EXTREMELY SLOW. NEED TO MAKE FASTER
 
-                # now we generate an overlay of prior images, to avoid flickering black pixels
+                # now we overlay the png onto prior images, to avoid flickering black sections of the image
 		if [ ${iterator} -eq 1 ]; then
                     cp "${mpg}" "${folder}/base.png" # just copy the image
+		    cp "${mpg}" "${folder}/${counter}.finished.png"
 	        else
 		    # composite background_image overlay_image result_image
 		    convert -composite "${folder}/base.png" "${mpg}" "${folder}/${counter}.finished.png"
 		    rm "${folder}/base.png"
 		    cp "${folder}/${counter}.finished.png" "${folder}/base.png"
 		fi
+
+                # now we annotate the date onto the image
+		convert "${folder}/${counter}.finished.png" -fill white -stroke '#000C' -strokewidth 2 -gravity Southwest -pointsize 200 -annotate +500+100 "${date}" "${folder}/${counter}.stamped.png"
+
 		iterator=$((iterator+1))
             done
-            ffmpeg -r 15 -i "${folder}/%03d.finished.png" "${folder}/animation.avi"
+            ffmpeg -r 10 -i "${folder}/%03d.stamped.png" -c:v libx264 -preset slow -crf 22 -c:a copy "${folder}/animation.avi"
             #rm "${folder}"/*.vrt
 	    #rm "${folder}"/*.xml
 	    #rm "${folder}"/*."${small_ext}"
 	    #rm "${folder}"/*.mpg.png
+	    #rm "${folder}"/*.finished.png
 	fi
     fi
 done
